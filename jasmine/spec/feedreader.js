@@ -88,11 +88,10 @@
 
     /* TODO: Write a new test suite named "Initial Entries" */
     describe('Initial Entries', function () {
-        beforeEach(function () {
-            loadFeed(0, function() {
-                done();
+        beforeEach(function (done) {
+            loadFeed(0, done);
             });
-        });
+        
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -109,29 +108,23 @@
 
     /* TODO: Write a new test suite named "New Feed Selection" */
     describe('New Feed Selection', function () {
+        const feed = document.querySelector('.feed');
+        const firstFeed = [];
 
+        beforeEach(function(done){
+            loadFeed(0);
+            Array.from(feed.children).forEach(function(entry){
+                firstFeed.push(entry.innerText);
+            });
+            loadFeed(1,done);
+        });
+        it('content changes', function(){
+            Array.from(feed.children).forEach(function(entry,index){
+                console.log(entry.innerText, firstFeed[index], entry.innerText === firstFeed[index]);
+                expect(entry.innerText === firstFeed[index]).toBe(false);
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
-       //   let content0;
-       //   let content1;
-
-       //   beforeEach(function(done) {
-       //     loadFeed(0, function() {
-       //       content0 = $('.feed').html();
-       //       loadFeed(1, function() {
-       //         content1 = $('.feed').html();
-       //         done();
-       //     });
-       //   });
-       // });
-
-       //   it('changes the content', function (done) {
-       //      expect(content0).not.toBe(content1);
-       //      done();
-       //  });
+            });
+        });
      });
-}());
+});
 
